@@ -9,13 +9,13 @@
 
     :root {
       --bg1: #fbf2f4;
-      --bg2: #f5dde3;
-      --paper1: #edc0ca;
-      --paper2: #e5aebb;
-      --inside1: #f8dce3;
-      --inside2: #f2c6d1;
-      --line: rgba(120, 63, 78, 0.18);
-      --crease: rgba(120, 63, 78, 0.14);
+      --bg2: #f3dbe2;
+      --paperA: #efc7d0;
+      --paperB: #e7b1bf;
+      --paperInsideA: #f9e1e7;
+      --paperInsideB: #f3ccd6;
+      --stroke: rgba(120, 63, 78, 0.16);
+      --crease: rgba(120, 63, 78, 0.12);
       --text: #7b4152;
       --shadow: rgba(109, 61, 75, 0.16);
     }
@@ -26,11 +26,11 @@
       display: grid;
       place-items: center;
       background:
-        radial-gradient(circle at 18% 12%, rgba(255,255,255,0.88), transparent 24%),
-        radial-gradient(circle at 82% 8%, rgba(255,255,255,0.55), transparent 18%),
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.88), transparent 24%),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.55), transparent 18%),
         linear-gradient(135deg, var(--bg1), var(--bg2));
-      overflow: hidden;
       font-family: Georgia, "Times New Roman", serif;
+      overflow: hidden;
     }
 
     .scene {
@@ -43,19 +43,19 @@
 
     .wrap {
       position: relative;
-      width: min(92vw, 420px);
-      height: min(92vh, 520px);
+      width: min(92vw, 430px);
+      height: min(92vh, 540px);
       display: grid;
       place-items: center;
       cursor: pointer;
-      animation: float 4.6s ease-in-out infinite;
+      animation: float 4.8s ease-in-out infinite;
     }
 
     .heart-stage {
       position: relative;
-      width: min(72vw, 290px);
+      width: min(78vw, 320px);
       aspect-ratio: 1 / 1;
-      filter: drop-shadow(0 22px 28px var(--shadow));
+      filter: drop-shadow(0 24px 28px var(--shadow));
     }
 
     .heart-svg {
@@ -64,25 +64,19 @@
       overflow: visible;
     }
 
-    .base-heart,
-    .inside-heart,
+    .shell,
+    .inner,
     .left-flap,
-    .right-flap {
+    .right-flap,
+    .bottom-fold {
       transition: transform 1s cubic-bezier(.22,.84,.24,1), opacity .8s ease;
       transform-box: fill-box;
       transform-origin: center;
     }
 
-    .base-heart path,
-    .left-flap path,
-    .right-flap path,
-    .inside-heart path {
-      vector-effect: non-scaling-stroke;
-    }
-
-    .inside-heart {
-      opacity: .82;
-      transform: scale(.90);
+    .inner {
+      opacity: .9;
+      transform: scale(.91);
     }
 
     .label,
@@ -92,7 +86,7 @@
       display: grid;
       place-items: center;
       text-align: center;
-      padding: 54px;
+      padding: 58px;
       color: var(--text);
       z-index: 4;
       user-select: none;
@@ -107,8 +101,8 @@
     }
 
     .message {
-      font-size: clamp(22px, 4.1vw, 30px);
-      line-height: 1.32;
+      font-size: clamp(19px, 3.6vw, 27px);
+      line-height: 1.28;
       font-weight: 700;
       opacity: 0;
       transform: scale(.86);
@@ -126,160 +120,176 @@
       user-select: none;
     }
 
-    .sparkles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .sparkles span {
-      position: absolute;
-      color: rgba(123,65,82,.58);
-      font-size: 14px;
-      opacity: 0;
-      animation: sparkle 5s linear infinite;
-    }
-
-    .sparkles span:nth-child(1) { top: 78px; left: 38px; animation-delay: 0s; }
-    .sparkles span:nth-child(2) { top: 76px; right: 42px; animation-delay: 1.1s; }
-    .sparkles span:nth-child(3) { bottom: 98px; left: 28px; animation-delay: 2.2s; }
-    .sparkles span:nth-child(4) { bottom: 94px; right: 38px; animation-delay: 3.3s; }
-
     .opened .label { opacity: 0; }
-    .opened .message {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .opened .inside-heart {
-      opacity: 1;
-      transform: scale(.96) translateY(3px);
-    }
-
-    .opened .left-flap {
-      transform: rotate(-12deg) translate(-10px, -4px);
-    }
-
-    .opened .right-flap {
-      transform: rotate(12deg) translate(10px, -4px);
-    }
+    .opened .message { opacity: 1; transform: scale(1); }
+    .opened .inner { opacity: 1; transform: scale(.97) translateY(1px); }
+    .opened .left-flap { transform: rotate(-16deg) translate(-14px, -6px); }
+    .opened .right-flap { transform: rotate(16deg) translate(14px, -6px); }
+    .opened .bottom-fold { transform: translateY(8px); }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
-    }
-
-    @keyframes sparkle {
-      0% { opacity: 0; transform: translateY(10px) scale(.68); }
-      18% { opacity: .9; }
-      58% { opacity: .9; transform: translateY(-7px) scale(1); }
-      100% { opacity: 0; transform: translateY(-18px) scale(.74); }
     }
   </style>
 </head>
 <body>
   <div class="scene">
     <div class="wrap" id="card" aria-label="Kalp mektup">
-      <div class="sparkles">
-        <span>✦</span>
-        <span>✧</span>
-        <span>✦</span>
-        <span>✧</span>
-      </div>
-
       <div class="heart-stage">
-        <svg class="heart-svg" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+        <svg class="heart-svg" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="paperGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#efc7d0"/>
-              <stop offset="100%" stop-color="#e5aebb"/>
+              <stop offset="0%" stop-color="#f1cbd3"/>
+              <stop offset="100%" stop-color="#e4adbc"/>
             </linearGradient>
-            <linearGradient id="insideGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#f9e1e7"/>
-              <stop offset="100%" stop-color="#f2c7d2"/>
+            <linearGradient id="innerGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fae5ea"/>
+              <stop offset="100%" stop-color="#f2c8d2"/>
             </linearGradient>
             <filter id="paperNoise" x="-20%" y="-20%" width="140%" height="140%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="7"/>
+              <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="12"/>
               <feColorMatrix type="saturate" values="0"/>
               <feComponentTransfer>
-                <feFuncA type="table" tableValues="0 0 .05 .08"/>
+                <feFuncA type="table" tableValues="0 0 .04 .07"/>
               </feComponentTransfer>
             </filter>
-            <clipPath id="heartClip">
-              <path d="M150 255
-                       C132 240, 72 196, 38 146
-                       C10 106, 20 55, 63 36
-                       C98 20, 128 32, 150 58
-                       C172 32, 202 20, 237 36
-                       C280 55, 290 106, 262 146
-                       C228 196, 168 240, 150 255Z"/>
+            <clipPath id="fullHeartClip">
+              <path d="M160 274
+                       C145 261, 106 232, 73 199
+                       C37 164, 20 126, 21 91
+                       C22 55, 46 31, 78 28
+                       C109 25, 135 40, 151 63
+                       C155 68, 157 72, 160 77
+                       C163 72, 165 68, 169 63
+                       C185 40, 211 25, 242 28
+                       C274 31, 298 55, 299 91
+                       C300 126, 283 164, 247 199
+                       C214 232, 175 261, 160 274 Z"/>
+            </clipPath>
+            <clipPath id="leftTopClip">
+              <path d="M160 77
+                       C142 48, 115 31, 82 30
+                       C49 29, 24 53, 23 90
+                       C22 117, 32 145, 56 171
+                       C81 147, 108 128, 126 114
+                       C138 105, 150 93, 160 77 Z"/>
+            </clipPath>
+            <clipPath id="rightTopClip">
+              <path d="M160 77
+                       C178 48, 205 31, 238 30
+                       C271 29, 296 53, 297 90
+                       C298 117, 288 145, 264 171
+                       C239 147, 212 128, 194 114
+                       C182 105, 170 93, 160 77 Z"/>
+            </clipPath>
+            <clipPath id="bottomClip">
+              <path d="M56 171
+                       C82 198, 113 223, 160 274
+                       C207 223, 238 198, 264 171
+                       C232 148, 193 124, 160 101
+                       C127 124, 88 148, 56 171 Z"/>
             </clipPath>
           </defs>
 
-          <g class="inside-heart">
-            <path d="M150 243
-                     C134 230, 82 191, 53 149
-                     C29 114, 36 69, 72 53
-                     C101 40, 127 52, 150 76
-                     C173 52, 199 40, 228 53
-                     C264 69, 271 114, 247 149
-                     C218 191, 166 230, 150 243Z"
-                  fill="url(#insideGrad)"
+          <g class="inner">
+            <path d="M160 258
+                     C148 247, 113 220, 84 192
+                     C53 162, 38 129, 39 98
+                     C40 68, 60 48, 86 46
+                     C112 44, 133 58, 147 79
+                     C151 84, 156 92, 160 99
+                     C164 92, 169 84, 173 79
+                     C187 58, 208 44, 234 46
+                     C260 48, 280 68, 281 98
+                     C282 129, 267 162, 236 192
+                     C207 220, 172 247, 160 258 Z"
+                  fill="url(#innerGrad)"
                   stroke="rgba(120,63,78,0.10)"
                   stroke-width="1.2"/>
-            <g clip-path="url(#heartClip)" opacity=".9">
-              <line x1="150" y1="52" x2="150" y2="228" stroke="rgba(120,63,78,0.14)" stroke-width="1.6"/>
-              <line x1="61" y1="140" x2="239" y2="140" stroke="rgba(120,63,78,0.13)" stroke-width="1.4"/>
+            <g clip-path="url(#fullHeartClip)">
+              <line x1="160" y1="82" x2="160" y2="236" stroke="rgba(120,63,78,0.13)" stroke-width="1.5"/>
+              <path d="M62 170 C104 144, 135 121, 160 101 C185 121, 216 144, 258 170"
+                    fill="none" stroke="rgba(120,63,78,0.12)" stroke-width="1.4"/>
             </g>
           </g>
 
-          <g class="base-heart">
-            <path d="M150 255
-                     C132 240, 72 196, 38 146
-                     C10 106, 20 55, 63 36
-                     C98 20, 128 32, 150 58
-                     C172 32, 202 20, 237 36
-                     C280 55, 290 106, 262 146
-                     C228 196, 168 240, 150 255Z"
+          <g class="shell">
+            <path d="M160 274
+                     C145 261, 106 232, 73 199
+                     C37 164, 20 126, 21 91
+                     C22 55, 46 31, 78 28
+                     C109 25, 135 40, 151 63
+                     C155 68, 157 72, 160 77
+                     C163 72, 165 68, 169 63
+                     C185 40, 211 25, 242 28
+                     C274 31, 298 55, 299 91
+                     C300 126, 283 164, 247 199
+                     C214 232, 175 261, 160 274 Z"
                   fill="url(#paperGrad)"
                   stroke="rgba(120,63,78,0.16)"
                   stroke-width="1.2"/>
-            <g clip-path="url(#heartClip)">
-              <rect x="0" y="0" width="300" height="280" filter="url(#paperNoise)"/>
-              <path d="M56 94 C93 76, 122 79, 149 108" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M188 84 C210 87, 229 98, 241 116" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2" stroke-linecap="round"/>
-              <ellipse cx="103" cy="114" rx="13" ry="7" fill="rgba(125,70,86,0.06)" transform="rotate(-18 103 114)"/>
-              <ellipse cx="193" cy="128" rx="10" ry="16" fill="rgba(125,70,86,0.05)" transform="rotate(21 193 128)"/>
-              <ellipse cx="134" cy="182" rx="17" ry="6" fill="rgba(125,70,86,0.05)" transform="rotate(-20 134 182)"/>
+            <g clip-path="url(#fullHeartClip)">
+              <rect x="0" y="0" width="320" height="300" filter="url(#paperNoise)"/>
+              <path d="M80 86 C104 73, 126 74, 150 98" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M170 95 C192 74, 216 72, 242 87" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="2" stroke-linecap="round"/>
+              <ellipse cx="108" cy="123" rx="16" ry="7" fill="rgba(125,70,86,0.05)" transform="rotate(-18 108 123)"/>
+              <ellipse cx="209" cy="132" rx="12" ry="18" fill="rgba(125,70,86,0.05)" transform="rotate(18 209 132)"/>
+              <ellipse cx="150" cy="213" rx="18" ry="6" fill="rgba(125,70,86,0.05)" transform="rotate(-14 150 213)"/>
             </g>
           </g>
 
           <g class="left-flap">
-            <path d="M150 58
-                     C126 32, 98 20, 63 36
-                     C20 55, 10 106, 38 146
-                     C59 176, 90 205, 123 228
-                     C118 197, 114 172, 112 145
-                     C110 117, 123 85, 150 58Z"
-                  fill="url(#paperGrad)"
-                  stroke="rgba(120,63,78,0.16)"
-                  stroke-width="1.2"/>
-            <path d="M149 58 C128 78, 118 104, 117 140 C116 166, 120 190, 125 224"
-                  fill="none" stroke="rgba(120,63,78,0.12)" stroke-width="1.5" stroke-linecap="round"/>
+            <g clip-path="url(#leftTopClip)">
+              <path d="M160 274
+                       C145 261, 106 232, 73 199
+                       C37 164, 20 126, 21 91
+                       C22 55, 46 31, 78 28
+                       C109 25, 135 40, 151 63
+                       C155 68, 157 72, 160 77
+                       C156 89, 150 101, 140 113
+                       C122 134, 95 152, 62 173
+                       C92 143, 122 116, 160 77 Z"
+                    fill="url(#paperGrad)"
+                    stroke="rgba(120,63,78,0.16)"
+                    stroke-width="1.2"/>
+              <path d="M159 78 C144 101, 128 121, 102 139 C87 149, 74 157, 61 166"
+                    fill="none" stroke="rgba(120,63,78,0.12)" stroke-width="1.4" stroke-linecap="round"/>
+            </g>
           </g>
 
           <g class="right-flap">
-            <path d="M150 58
-                     C174 32, 202 20, 237 36
-                     C280 55, 290 106, 262 146
-                     C241 176, 210 205, 177 228
-                     C182 197, 186 172, 188 145
-                     C190 117, 177 85, 150 58Z"
-                  fill="url(#paperGrad)"
-                  stroke="rgba(120,63,78,0.16)"
-                  stroke-width="1.2"/>
-            <path d="M151 58 C172 78, 182 104, 183 140 C184 166, 180 190, 175 224"
-                  fill="none" stroke="rgba(120,63,78,0.12)" stroke-width="1.5" stroke-linecap="round"/>
+            <g clip-path="url(#rightTopClip)">
+              <path d="M160 274
+                       C175 261, 214 232, 247 199
+                       C283 164, 300 126, 299 91
+                       C298 55, 274 31, 242 28
+                       C211 25, 185 40, 169 63
+                       C165 68, 163 72, 160 77
+                       C164 89, 170 101, 180 113
+                       C198 134, 225 152, 258 173
+                       C228 143, 198 116, 160 77 Z"
+                    fill="url(#paperGrad)"
+                    stroke="rgba(120,63,78,0.16)"
+                    stroke-width="1.2"/>
+              <path d="M161 78 C176 101, 192 121, 218 139 C233 149, 246 157, 259 166"
+                    fill="none" stroke="rgba(120,63,78,0.12)" stroke-width="1.4" stroke-linecap="round"/>
+            </g>
+          </g>
+
+          <g class="bottom-fold">
+            <g clip-path="url(#bottomClip)">
+              <path d="M56 171
+                       C83 195, 117 220, 160 267
+                       C203 220, 237 195, 264 171
+                       C231 150, 194 126, 160 101
+                       C126 126, 89 150, 56 171 Z"
+                    fill="url(#paperGrad)"
+                    stroke="rgba(120,63,78,0.16)"
+                    stroke-width="1.2"/>
+              <path d="M69 171 C98 154, 129 129, 160 101 C191 129, 222 154, 251 171"
+                    fill="none" stroke="rgba(120,63,78,0.12)" stroke-width="1.4" stroke-linecap="round"/>
+            </g>
           </g>
         </svg>
 
